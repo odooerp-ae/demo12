@@ -1,0 +1,28 @@
+<odoo>
+  <data>
+      <!-- Inherit Form View to Modify it -->
+      <record id="view_inherit_invoice_form_armor_form" model="ir.ui.view">
+          <field name="name">view_inherit_invoice_form_armor_form</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_form"/>
+          <field name="arch" type="xml">
+              
+              <!-- position: after|before|replace|attributes|inside -->
+              <xpath expr="//field[@name='comment']" position="before">
+                  <group >
+                    <group>
+                      <field name="account_invoice_line_ids" widget="many2many_tags"/>
+                      <field name="total_expense_amount"/>
+                      <field name="margin_amount" />
+                    </group>
+
+                    <group>
+
+                    </group>
+                  </group>
+              </xpath>
+              
+          </field>
+      </record>
+  </data>
+</odoo>

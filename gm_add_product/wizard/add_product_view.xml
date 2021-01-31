@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--sale order add product-->
+        <record id="sale_order_product_form" model="ir.ui.view">
+            <field name="name">sale.order.product.form</field>
+            <field name="model">sale.order.product</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <field name="partner_id" readonly="1"/>
+                        <group string="Search">
+                            <field name="category_id"/>
+                            <field name="search_pd"/>
+                            <field name="search_pd2"/>
+                        </group>
+                        <group string="Search Products">
+                            <field name="product_ids">
+                                <tree editable="bottom"  create="false">
+                                    <field name="choose"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <!--<field name="discount"/>-->
+                                    <field name="partner_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Final Products">
+                            <field name="final_product_ids">
+                                 <tree editable="bottom" create="false">
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <!--<field name="discount"/>-->
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                         <button name="get_final_product" type="object" string="Sale Order"  class="oe_highlight"/>
+                        or
+                         <button name="cancel_product" type="object" string="Cancel"  class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_sal_order_product" model="ir.actions.act_window">
+            <field name="name">Add products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.product</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale_order_product_form"/>
+            <field name="target">new</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+              </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+              </p>
+            </field>
+        </record>
+
+        <!--Purchase Add product-->
+        <record id="purchase_order_product_form" model="ir.ui.view">
+            <field name="name">sale.order.product.form</field>
+            <field name="model">sale.order.product</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group string="Search">
+                            <field name="partner_id" invisible="1"/>
+                            <field name="category_id"/>
+                            <field name="search_pd"/>
+                            <field name="search_pd2"/>
+                        </group>
+                        <group string="Search Products">
+                            <field name="product_ids">
+                                <tree editable="bottom"  create="false">
+                                    <field name="choose"/>
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <field name="price_unit" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Final Products">
+                            <field name="final_product_ids">
+                                 <tree editable="bottom" create="false">
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <field name="price_unit" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                         <button name="get_final_product" type="object" string="Purchase Order"  class="oe_highlight"/>
+                        or
+                         <button name="cancel_product" type="object" string="Cancel"  class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="action_purchase_order_product" model="ir.actions.act_window">
+            <field name="name">Add products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.product</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_order_product_form"/>
+            <field name="target">new</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+              </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+              </p>
+            </field>
+        </record>
+
+        <!--Purchase Add product-->
+        <record id="purchase_order_product_form1" model="ir.ui.view">
+            <field name="name">purchase.order.product.form1</field>
+            <field name="model">sale.order.product</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group string="Search">
+                            <field name="category_id"/>
+                            <field name="search_pd"/>
+                            <field name="search_pd2"/>
+                        </group>
+                        <group string="Search Products">
+                            <field name="product_ids">
+                                <tree editable="bottom"  create="false">
+                                    <field name="choose"/>
+                                   <field name="partner_id" invisible="1"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <!--<field name="price_unit" invisible="1"/>-->
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Final Products">
+                            <field name="final_product_ids">
+                                 <tree editable="bottom" create="false">
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <!--<field name="price_unit" invisible="1"/>-->
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                         <button name="get_final_product" type="object" string="Purchase Order"  class="oe_highlight"/>
+                        or
+                         <button name="cancel_product" type="object" string="Cancel"  class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!--<record id="action_purchase_request_order_products" model="ir.actions.act_window">-->
+            <!--<field name="name">Add products</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">requests.order.product</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="target">new</field>-->
+            <!--<field name="view_id" ref="purchase_order_product_form1"/>-->
+        <!--</record>-->
+
+
+         <record id="material_request_product_form1" model="ir.ui.view">
+            <field name="name">material_request_product_form1</field>
+            <field name="model">material.request.product</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group string="Search">
+                            <field name="category_id"/>
+                            <field name="search_pd"/>
+                            <field name="search_pd2"/>
+                        </group>
+                        <group string="Search Products">
+                            <field name="product_ids">
+                                <tree editable="bottom"  create="false">
+                                    <field name="choose" readonly="0"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Final Products">
+                            <field name="final_product_ids">
+                                 <tree editable="bottom" create="false">
+                                    <field name="product_id" readonly="1"/>
+                                    <!--<field name="module_id" options="{'no_create':true}"/>-->
+                                    <field name="quantity"/>
+                                    <!--<field name="discount"/>-->
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                         <button name="get_final_product" type="object" string="Material Request"  class="oe_highlight"/>
+                        or
+                         <button name="cancel_product" type="object" string="Cancel"  class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_material_request_order_products" model="ir.actions.act_window">
+            <field name="name">Add products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">material.request.product</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="material_request_product_form1"/>
+        </record>
+
+
+
+
+    </data>
+</odoo>

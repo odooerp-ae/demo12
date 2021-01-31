@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="view_inherit_invoice_supplier_form_armor_form" model="ir.ui.view">
+            <field name="name">view_inherit_invoice_supplier_form_armor_form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//field[@name='reference']" position="after">
+                    <field name="is_expense" />
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</odoo>
