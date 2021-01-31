@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+        <record id="view_documnets_stock_inherited_form" model="ir.ui.view">
+            <field name="name">view.documnets.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="replace">
+                      <button name="%(stock.act_stock_return_picking)d" string="Return"
+                              attrs="{'invisible': ['|', ('state', 'not in', ['done','documented']), ('is_locked', '=', False)]}"
+                              type="action" groups="base.group_user"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="action_documented"
+                            attrs="{'invisible': ['|',('picking_type_code', '!=', 'outgoing'), ('state', '!=', 'done')]}"
+                            string="Documented" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="incoterm_sale" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                    <field name="coo_sale" invisble="1"/>
+                    <field name="coc" invisble="1"/>
+                    <field name="msds" invisble="1"/>
+                    <field name="embassy_attestation" invisble="1"/>
+
+                    <field name="partner_reef" attrs="{'invisible': [('partner_reef', '=', False)]}"/>
+
+                </xpath>
+                <xpath expr="//page[@name='extra']" position="after">
+                    <page string="Documents"
+                          attrs="{'invisible': [('state', 'not in', ('done','documented')),('picking_type_code','!=','outgoing')]}">
+                        <group colspan="4">
+                            <field name="bol_doc"  attrs="{'invisible': [('picking_type_code','!=','outgoing')],
+                            'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing'),('incoterm_sale', 'in', ['CFR','CIF'])]}"/>
+                            <field name="pl_doc" invisible="1"/>
+                            <field name="ci_doc"  attrs="{'invisible': [('picking_type_code','!=','outgoing')],'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing')]}"/>
+                            <field name="coa_doc"  attrs="{'invisible': [('picking_type_code','!=','outgoing')],'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing')]}"/>
+                        </group>
+                        <group colspan="4">
+                            <field name="clp_doc"  attrs="{'invisible': [('picking_type_code','!=','outgoing')],'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing')]}"/>
+                            <field name="vr_doc"  attrs="{'invisible': [('picking_type_code','!=','outgoing')],'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing')]}"/>
+                            <field name="di_doc"  attrs="{'invisible': [('picking_type_code','!=','outgoing')],'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing')]}"/>
+                            <field name="coc_doc" attrs="{'invisible': [('picking_type_code','!=','outgoing')],
+                            'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing'),('coc', '=', 'yes')]}"/>
+                        </group>
+                        <group colspan="4">
+                            <field name="coo_doc" attrs="{'invisible': [('picking_type_code','!=','outgoing')],
+                            'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing'),('coo_sale', '=', True)]}"/>
+                            <field name="ea_doc" attrs="{'invisible': [('picking_type_code','!=','outgoing')],
+                            'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing'),('embassy_attestation', '=', 'yes')]}"/>
+                            <field name="ip_doc" attrs="{'invisible': [('picking_type_code','!=','outgoing')],
+                            'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing'),('incoterm_sale', '=', 'CIF')]}"/>
+                           <field name="msds_doc" attrs="{'invisible': [('picking_type_code','!=','outgoing')],
+                            'required': [('state', 'in', ('done','documented')),('picking_type_code','=','outgoing'),('msds', '=', 'yes')]}"/>
+
+                        </group>
+
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

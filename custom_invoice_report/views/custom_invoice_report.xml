@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--custom header-->
+        <template id="external_layout_header_extended" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[hasclass('header')]" position="replace">
+                <div class="header first-page o_background_header">
+                    <div class="row">
+                        <div class="col-6">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="width:250px;height:200px;"/>
+                            <!--<b><h2 style="color:RGB(192,0,0);" t-field="company.name"/></b>-->
+                        </div>
+                        <div class="col-6">
+                            <span t-field="company.street"/><br/>
+                            Tel: <span t-field="company.phone"/><br/>
+                            Email: <span t-field="company.email"/><br/>
+                            <b>Vat NO:
+                                <t t-if="company.vat">
+                                    <span t-if="len(company.vat.split(' '))&gt;=2" t-esc="company.vat.split('TRN')[1]" />
+                                    <span t-if="len(company.vat.split(' ')) &lt;= 1" t-esc="company.vat" />
+                                </t>
+                                <br/>
+                            </b>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- To Add Details at the end of invoice -->
+
+        <template id="inherit_external_invoice_report" inherit_id="account.report_invoice_document">
+            <xpath expr="//h2" position="replace">
+                <h2>
+                    <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Tax Invoice<br/>فاتورة ضريبية</span>
+                    <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
+                    <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Tax Invoice</span>
+                    <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                    <span t-if="o.type == 'out_refund'">Refund</span>
+                    <span t-if="o.type == 'in_refund'">Vendor Refund</span>
+                    <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
+                    <span t-field="o.number"/>
+                </h2>
+            </xpath>
+
+            <xpath expr="//t[@t-set='address']" position="replace">
+                <div name="invoice_address" class="col-xs-5 col-xs-offset-7">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="padding-right:5px; padding-bottom:2px;">
+                                    <strong>Invoice to: </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-right:5px; padding-bottom:2px;">Customer Name: </td>
+                                <td><span t-field="o.partner_id"/></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-right:5px; padding-bottom:2px;">Contact No: </td>
+                                <td>
+                                    <span t-field="o.partner_id.mobile"/>
+                                    <span t-if="o.partner_id.mobile and o.partner_id.phone"> / </span>
+                                    <span t-field="o.partner_id.phone"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </xpath>
+            <xpath expr="//div[@id='total']" position="after">
+                <div class="col-xs-8 pull-left" style="padding-top:50px;">
+                    <span t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+                </div>
+                <t t-if="not o.company_id.report_footer">
+                    <t t-foreach="o.company_id.bank_journal_ids" t-as="journal">
+                        <t t-if="journal.display_on_report">
+                            <t t-set="j" t-value="journal"/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            Bank Details : <br/>
+                            Baneficiary Name : <span t-esc="j.baneficiary_name"/> <br/>
+                            Bank Name : <span t-esc="j.bank_id.name"/> <br/>
+                            Account # : <span t-esc="j.bank_acc_number"/> <br/>
+                            IBAN : <span t-esc="j.iban"/> <br/>
+                            Branch : <span t-esc="j.branch"/> <br/>
+                            SWIFT : <span t-esc="j.swift"/> <br/>
+                        </t>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="res_company_invoice_template_view">
+          <field name="name">res.company.template.form</field>
+          <field name="model">res.company</field>
+          <field name="inherit_id" ref="base.view_company_form" />
+          <field name="arch" type="xml">
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="invoice_report_template" domain="[('type', '=', 'qweb')]"/>
+                </xpath>
+          </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_invoice_form_view">
+          <field name="name">account.invoice.form.lpo</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_form" />
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='payment_term_id']" position="after">
+                  <field name="lpo_customer_reference"/>
+              </xpath>
+              <field name="partner_id" position="after">
+                  <field name="delivery_to"/>
+              </field>
+          </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_invoice_supplier_form_extended">
+          <field name="name">account.invoice.supplier.form.extended</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_supplier_form"/>
+          <field name="arch" type="xml">
+              <field name="partner_id" position="after">
+                  <field name="delivery_to"/>
+              </field>
+              <field name="origin" position="after">
+                  <field name="vendor_do_number" attrs="{'invisible':[('type','not in',['in_invoice','in_refund'])]}"/>
+              </field>
+          </field>
+    </record>
+</odoo>

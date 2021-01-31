@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="product_category_form_view_based_fields" model="ir.ui.view">
+            <field name="name">product.category.form.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="fields configuration">
+                            <group>
+                                <group>
+                                    <field name="show_dimensions_length"/>
+                                    <field name="show_dimensions_width"/>
+                                    <field name="show_dimensions_height"/>
+                                    <field name="show_dimensions_diamter"/>
+                                    <field name="show_artwork"/>
+                                    <field name="show_code"/>
+                                    <field name="show_brand"/>
+                                    <field name="show_top_type"/>
+                                    <field name="show_sae"/>
+                                    <field name="show_api"/>
+                                    <field name="show_weight"/>
+                                    <field name="show_thickness"/>
+                                    <field name="show_background_color"/>
+                                    <field name="show_no_plyes"/>
+                                    <field name="show_pressing_type"/>
+                                    <field name="show_material"/>
+                                    <field name="show_shape"/>
+                                    <field name="show_mold"/>
+                                    <field name="show_bottom_color"/>
+                                    <field name="show_cover_color"/>
+                                    <field name="show_top_color"/>
+                                    <field name="show_color"/>
+                                </group>
+                                <group>
+                                    <field name="show_ribbon_color" />
+                                    <field name="show_logo_color" />
+                                    <field name="show_logo_location" />
+                                    <field name="show_closure_type" />
+                                    <field name="show_marking_options" />
+                                    <field name="show_picture_rightside" />
+                                    <field name="show_picture_leftside" />
+                                    <field name="show_picture_front" />
+                                    <field name="show_picture_angle" />
+                                    <field name="show_picture" />
+                                    <field name="show_picture_top" />
+                                    <field name="show_picture_side1" />
+                                    <field name="show_picture_side2" />
+                                    <field name="show_label_dimensions_width" />
+                                    <field name="show_label_dimensions_height" />
+                                    <field name="show_printed_can" />
+                                    <field name="show_no_impressions_front" />
+                                    <field name="show_no_impressions_back" />
+                                    <field name="show_print_artork_pdf" />
+                                    <field name="show_notes" />
+                                    <field name="show_language" />
+                                    <field name="show_status" />
+                                    <field name="show_no_rings" />
+
+                                </group>
+
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

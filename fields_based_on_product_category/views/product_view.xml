@@ -1,0 +1,139 @@
+<odoo>
+    <data>
+         <!--Inherit Form View to Modify it-->
+        <!--<record id="view_template_property_weight_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">product.template.weight.form.inherit</field>-->
+            <!--<field name="model">product.template</field>-->
+            <!--<field name="inherit_id" ref="stock.view_template_property_form"/>-->
+            <!--<field name="arch" type="xml">-->
+
+                <!--<xpath expr="//group[@name='traceability']/field[@name='tracking']" position="replace">-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//field[@name='route_from_categ_ids']" position="after">-->
+                    <!--<group>-->
+                        <!--<field name="tracking" widget="radio" attrs="{'invisible':[('type', 'in', ['service', 'digital'])]}" groups="stock.group_production_lot"/>-->
+                    <!--</group>-->
+                <!--</xpath>-->
+
+            <!--</field>-->
+        <!--</record>-->
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="product_template_only_form_view_based_category_fields" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="context">{'default_categ_id': active_id}</field>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="brand" attrs="{'invisible':[('show_brand','=',False)]}"/>
+                    <field name="sae" attrs="{'invisible':[('show_sae','=',False)]}"/>
+                    <field name="api" attrs="{'invisible':[('show_api','=',False)]}"/>
+                </field>
+                <xpath expr="//page[last()]" position="after">
+                        <page string="Additional fields">
+                            <field name="show_dimensions_length" invisible="1"/>
+                            <field name="show_dimensions_width" invisible="1"/>
+                            <field name="show_dimensions_height" invisible="1"/>
+                            <field name="show_dimensions_diamter" invisible="1"/>
+                            <field name="show_artwork" invisible="1"/>
+                            <field name="show_code" invisible="1"/>
+                            <field name="show_brand" invisible="1"/>
+                            <field name="show_top_type" invisible="1"/>
+                            <field name="show_sae" invisible="1"/>
+                            <field name="show_api" invisible="1"/>
+                            <field name="show_weight" invisible="1"/>
+                            <field name="show_thickness" invisible="1"/>
+                            <field name="show_background_color" invisible="1"/>
+                            <field name="show_no_plyes" invisible="1"/>
+                            <field name="show_pressing_type" invisible="1"/>
+                            <field name="show_material" invisible="1"/>
+                            <field name="show_shape" invisible="1"/>
+                            <field name="show_mold" invisible="1"/>
+                            <field name="show_bottom_color" invisible="1"/>
+                            <field name="show_cover_color" invisible="1"/>
+                            <field name="show_top_color" invisible="1"/>
+                            <field name="show_color" invisible="1"/>
+                            <field name="show_ribbon_color" invisible="1" />
+                            <field name="show_logo_color" invisible="1"/>
+                            <field name="show_logo_location" invisible="1"/>
+                            <field name="show_closure_type" invisible="1"/>
+                            <field name="show_marking_options" invisible="1"/>
+                            <field name="show_picture_rightside" invisible="1"/>
+                            <field name="show_picture_leftside" invisible="1"/>
+                            <field name="show_picture_front" invisible="1"/>
+                            <field name="show_picture_angle" invisible="1"/>
+                            <field name="show_picture" invisible="1"/>
+                            <field name="show_picture_top" invisible="1"/>
+                            <field name="show_picture_side1" invisible="1"/>
+                            <field name="show_picture_side2" invisible="1"/>
+                            <field name="show_label_dimensions_width" invisible="1"/>
+                            <field name="show_label_dimensions_height" invisible="1"/>
+                            <field name="show_printed_can" invisible="1"/>
+                            <field name="show_no_impressions_front" invisible="1"/>
+                            <field name="show_no_impressions_back" invisible="1"/>
+                            <field name="show_print_artork_pdf" invisible="1"/>
+                            <field name="show_notes" invisible="1"/>
+                            <field name="show_language" invisible="1"/>
+                            <field name="show_status" invisible="1"/>
+                            <field name="show_no_rings" invisible="1"/>
+                            <group>
+
+                                <group>
+                                    <field name="dimensions_length" attrs="{'invisible':[('show_dimensions_length','=',False)]}"/>
+                                    <field name="dimensions_width" attrs="{'invisible':[('show_dimensions_width','=',False)]}"/>
+                                    <field name="dimensions_height" attrs="{'invisible':[('show_dimensions_height','=',False)]}"/>
+                                    <field name="dimensions_diamter" attrs="{'invisible':[('show_dimensions_diamter','=',False)]}"/>
+                                    <field name="artwork" attrs="{'invisible':[('show_artwork','=',False)]}"/>
+                                    <field name="code" attrs="{'invisible':[('show_code','=',False)]}"/>
+                                    <field name="top_type" attrs="{'invisible':[('show_top_type','=',False)]}"/>
+                                    <field name="categ_weight" attrs="{'invisible':[('show_weight','=',False)]}"/>
+                                    <field name="thickness" attrs="{'invisible':[('show_thickness','=',False)]}"/>
+                                    <field name="background_color" attrs="{'invisible':[('show_background_color','=',False)]}"/>
+                                    <field name="no_plyes" attrs="{'invisible':[('show_no_plyes','=',False)]}"/>
+                                    <field name="pressing_type" attrs="{'invisible':[('show_pressing_type','=',False)]}"/>
+                                    <field name="material" attrs="{'invisible':[('show_material','=',False)]}"/>
+                                    <field name="shape" attrs="{'invisible':[('show_shape','=',False)]}"/>
+                                    <field name="mold" attrs="{'invisible':[('show_mold','=',False)]}"/>
+                                    <field name="bottom_color" attrs="{'invisible':[('show_bottom_color','=',False)]}"/>
+                                    <field name="cover_color" attrs="{'invisible':[('show_cover_color','=',False)]}"/>
+                                    <field name="top_color" attrs="{'invisible':[('show_top_color','=',False)]}"/>
+                                    <field name="color" attrs="{'invisible':[('show_color','=',False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="ribbon_color" attrs="{'invisible':[('show_ribbon_color','=',False)]}"/>
+                                    <field name="logo_color" attrs="{'invisible':[('show_logo_color','=',False)]}"/>
+                                    <field name="logo_location" attrs="{'invisible':[('show_logo_location','=',False)]}"/>
+                                    <field name="closure_type" attrs="{'invisible':[('show_closure_type','=',False)]}"/>
+                                    <field name="marking_options" attrs="{'invisible':[('show_marking_options','=',False)]}"/>
+                                    <field name="picture_rightside" attrs="{'invisible':[('show_picture_rightside','=',False)]}"/>
+                                    <field name="picture_leftside" attrs="{'invisible':[('show_picture_leftside','=',False)]}"/>
+                                    <field name="picture_front" attrs="{'invisible':[('show_picture_front','=',False)]}"/>
+                                    <field name="picture_angle" attrs="{'invisible':[('show_picture_angle','=',False)]}"/>
+                                    <field name="picture" attrs="{'invisible':[('show_picture','=',False)]}"/>
+                                    <field name="picture_top" attrs="{'invisible':[('show_picture_top','=',False)]}"/>
+                                    <field name="picture_side1" attrs="{'invisible':[('show_picture_side1','=',False)]}"/>
+                                    <field name="picture_side2" attrs="{'invisible':[('show_picture_side2','=',False)]}"/>
+                                    <field name="label_dimensions_width" attrs="{'invisible':[('show_label_dimensions_width','=',False)]}"/>
+                                    <field name="label_dimensions_height" attrs="{'invisible':[('show_label_dimensions_height','=',False)]}"/>
+                                    <field name="printed_can" attrs="{'invisible':[('show_printed_can','=',False)]}"/>
+                                    <field name="no_impressions_front" attrs="{'invisible':[('show_no_impressions_front','=',False)]}"/>
+                                    <field name="no_impressions_back" attrs="{'invisible':[('show_no_impressions_back','=',False)]}"/>
+                                    <field name="print_artork_pdf" attrs="{'invisible':[('show_print_artork_pdf','=',False)]}"/>
+                                    <field name="notes" attrs="{'invisible':[('show_notes','=',False)]}"/>
+                                    <field name="language" attrs="{'invisible':[('show_language','=',False)]}"/>
+                                    <field name="status" attrs="{'invisible':[('show_status','=',False)]}"/>
+                                    <field name="no_rings" attrs="{'invisible':[('show_no_rings','=',False)]}"/>
+
+                                </group>
+
+                            </group>
+                        </page>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

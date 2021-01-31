@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Picking List"
+            id="action_report_picking_list"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="changes_delivery_order.report_picking_list"
+            file="changes_delivery_order.report_picking_list"
+             menu="False"
+        />
+
+    </data>
+</odoo>
