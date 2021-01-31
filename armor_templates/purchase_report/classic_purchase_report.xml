@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+   <report
+            string="Purchase Order Template"
+            id="custom_report_purchase_ordeer_template"
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="armor_templates.custom_report_purchase_ordeer"
+            file="armor_templates.custom_report_purchase_ordeer"
+            menu="False"
+        />
+    </data>
+</odoo>

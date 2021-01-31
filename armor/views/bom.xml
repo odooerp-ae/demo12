@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+
+        <record id="action_report_mrp_bom2" model="ir.actions.client">
+            <field name="name">Armor BoM Structure &amp; Cost</field>
+            <field name="tag">mrp_bom_report2</field>
+            <field name="context" eval="{'model': 'report.armor.report_bom_structure','awd':1}" />
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <record id="bom_form_inherit" model="ir.ui.view">
+            <field name="name">mrp.bom</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(mrp.action_report_mrp_bom)d']" position="after">
+                    <button name="%(armor.action_report_mrp_bom2)d" type="action"
+                              context="{'awad':'dd'}"  class="oe_stat_button" icon="fa-bars" string="Structure &amp; Cost2" attrs="{'invisible': [('bom_line_ids', '=', [])]}"/>
+
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="bom_type"  nolabel="1" style="color:blue;font-weight:bold;" widget="radio"/>
+                    <field name="p_ids"  widget="many2many_tags" invisible="1" />
+                </xpath>
+                <xpath expr="//field['bom_line_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="perc" attrs="{'column_invisible':[('parent.bom_type','=','packaging')]}" ></field>
+                </xpath>
+
+                <xpath expr="//field['bom_line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">[('id','in',parent.p_ids)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

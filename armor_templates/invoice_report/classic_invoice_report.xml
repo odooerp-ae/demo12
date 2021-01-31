@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <report
+            id="commercial_invoice"
+            model="account.invoice"
+            string="COMMERCIAL INVOICE"
+            report_type="qweb-pdf"
+            name="armor_templates.report_commercial_invoice"
+            file="armor_templates.report_commercial_invoice"
+        />
+        <report
+            id="tax_invoice"
+            model="account.invoice"
+            string="TAX INVOICE"
+            report_type="qweb-pdf"
+            name="armor_templates.report_tax_invoice"
+            file="armor_templates.report_tax_invoice"
+        />
+
+    </data>
+</odoo>

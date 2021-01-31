@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_report_purchase_order_document">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header">
+                <div class="row">
+                </div>
+            </div>
+            <div class="footer">
+                <div class="row">
+                </div>
+            </div>
+
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div>
+                        <center>
+                            <h2>Purchase Order</h2>
+                        </center>
+                        <br/>
+                        <table class="table border-black"
+                               style="border-right:1px solid black;border-left:1px solid black;">
+                            <tr style="border-right:1px solid black;border-bottom:1px solid black;">
+                                <td rowspan="4" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                    Invoice To
+                                    <br/>
+                                    <b>
+                                        <span t-field="company.name"/>
+                                    </b>
+                                    <br/>
+                                    <span t-field="company.street"/>
+                                    <br/>
+                                    <span t-field="company.country_id"/>
+                                    <br/>
+                                    Emirate:
+                                    <span t-field="company.city"/>
+                                    <br/>
+                                    TRN:
+                                    <span t-field="company.vat"/>
+                                    <br/>
+                                    E-Mail:
+                                    <span t-field="company.email"/>
+                                    <br/>
+
+                                </td>
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                    Voucher No.
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.name"/>
+                                    </b>
+                                </td>
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                    Dated
+                                    <br/>
+                                    <b>
+                                        <span t-esc="datetime.datetime.strptime(str(doc.date_order), '%Y-%m-%d %H:%M:%S').strftime('%d-%B-%Y')"/>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr style="border-right:1px solid black;border-bottom:1px solid black;">
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                </td>
+                                <td style="padding:0px 0px 0px 5px;">Mode/Terms of Payments
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.payment_term_id.name"/>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr style="border-right:1px solid black;border-bottom:1px solid black;">
+                                <td style="border-right:1px solid black;border-bottom:1px solid black;padding:0px 0px 0px 5px;">Supplier's
+                                    Ref./Order No.
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.partner_ref"/>
+                                    </b>
+                                </td>
+                                <td style="border-right:1px solid black;border-bottom:1px solid black;padding:0px 0px 0px 5px;">
+                                    Other Reference(s)
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.other_ref"/>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr style="border-right:1px solid black;border-bottom:1px solid black;">
+                                <td style="border-right:1px solid black;border-bottom:1px solid black;padding:0px 0px 0px 5px;">Despatch through
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.despatch"/>
+                                    </b>
+                                </td>
+                                <td style="border-right:1px solid black;border-bottom:1px solid black;padding:0px 0px 0px 5px;">
+                                    Destination
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.destination"/>
+                                    </b>
+                                </td>
+                            </tr>
+
+                            <tr style="border-right:1px solid black;border-bottom:1px solid black;">
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">Supplier
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.partner_id.name"/>
+                                    </b>
+                                    <t t-if="doc.partner_id.street">
+                                        <t t-esc="doc.partner_id.street"/>
+                                        <br/>
+                                    </t>
+
+                                    Emirate:
+                                    <t t-if="doc.partner_id.city">
+                                        <t t-esc="doc.partner_id.city"/>
+                                        <br/>
+                                    </t>
+
+                                    Country:
+                                    <t t-if="doc.partner_id.country_id.name">
+                                        <t t-esc="doc.partner_id.country_id.name"/>
+                                        <br/>
+                                    </t>
+
+                                    TRN:
+                                    <t t-if="doc.partner_id.vat">
+                                        <t t-esc="doc.partner_id.vat"/>
+                                        <br/>
+                                    </t>
+                                </td>
+                                <td colspan="2" style="padding:0px 0px 0px 5px;">
+                                    Terms of Delivery
+                                    <br/>
+                                    <b>
+                                        <t t-esc="doc.notes"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table border-black" style="border:1px solid black;">
+                            <thead>
+                                <tr class="border-black" style="border-bottom:1px solid black;">
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;width:3%;border-bottom:1px solid black;">SI.No
+                                    </th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">Description Of Goods</th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">Due on</th>
+                                    <th colspan="2" style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">Quantity</th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">Rate</th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">Per</th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">Amount</th>
+                                </tr>
+                                <tr class="border-black" style="border-bottom:1px solid black;">
+                                    <th style="border-bottom:1px solid black;"></th>
+                                    <th style="border-bottom:1px solid black;"></th>
+                                    <th style="border-bottom:1px solid black;"></th>
+                                    <th style="border-right:1px solid black;border-left:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">To Ship</th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;">To Bill</th>
+                                    <th style="border-bottom:1px solid black;"></th>
+                                    <th style="border-bottom:1px solid black;"></th>
+                                    <th style="border-right:1px solid black;padding:0px 0px 0px 5px;border-bottom:1px solid black;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="sale_tbody">
+                                <t t-set="seq" t-value="1"/>
+                                <t t-set="received" t-value="0"/>
+                                <t t-set="invoiced" t-value="0"/>
+                                <t t-foreach="doc.order_line" t-as="l">
+                                    <tr class="border-black" style="border-right:1px solid black;">
+                                        <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <t t-esc="seq"/>
+                                        </td>
+                                        <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-field="l.name"/>
+                                        </td>
+                                        <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-esc="datetime.datetime.strptime(str(l.date_planned), '%Y-%m-%d %H:%M:%S').strftime('%d-%B-%Y')"/>
+                                        </td>
+                                        <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-field="l.product_qty"/>
+                                        </td>
+                                        <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-field="l.qty_invoiced"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-field="l.price_unit"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-field="l.product_uom"/>
+                                        </td>
+
+                                        <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                            <span t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="seq" t-value="seq+1"/>
+                                    <t t-set="received" t-value="received+l.qty_received"/>
+                                    <t t-set="invoiced" t-value="invoiced+l.qty_invoiced"/>
+                                </t>
+                                <tr style="border-right:1px solid black;">
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                                    <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        Total
+                                    </td>
+                                    <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                    </td>
+                                    <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <b>
+                                            <t t-esc="received"/>
+                                        </b>
+                                    </td>
+                                    <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <b>
+                                            <t t-esc="invoiced"/>
+                                        </b>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                                    <td class="text-right" style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <b>
+                                            <span t-field="doc.amount_total"
+                                                  t-field-options='{"widget": "monetary", "display_currency": "doc.pricelist_id.currency_id"}'/>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" style="border-bottom-style: none;border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        Amount Chargeable (in words)
+                                        <br/>
+                                        <b>
+                                            <span t-esc="doc.amount_total_words"/>
+                                        </b>
+                                        <span style="float:right;padding:0px 0px 0px 5px;">E.&amp; O.E</span>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr style="border-right:1px solid black;">
+                                    <td colspan="3" style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;" colspan="8">
+                                        <span style="float:right;font-size:9px;">
+                                            <b>For ARMOR LUBRICATNS</b>
+                                        </span>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <center>
+                            <p>This is a Computer Generated Document</p>
+                        </center>
+                    </div>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="custom_report_purchase_ordeer">
+
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="armor_templates.custom_report_purchase_order_document" t-lang="o.partner_id.lang"/>
+                    </t>
+                </t>
+        </template>
+
+        <!--<record id="report_purchaseorder_document_inheriteeed" model="ir.ui.view">
+            <field name="name">purchase.report_purchasedorder_document</field>
+            <field name="inherit_id" ref="purchase.report_purchaseorder_document"/>
+            <field eval="10" name="priority"/>
+            <field name="type">qweb</field>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@t-if='o.date_order']" position="after">
+                        <div t-if="o.partner_ref" class="col-3 bm-2">
+                               <strong>Supplier Ref:</strong>
+                               <p t-field="o.partner_ref" class="m-0"/>
+                        </div>
+                    </xpath>
+                </data>
+            </field>
+        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <record id="sale_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="is_mo_confirmed" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button name="action_check_availability" string="Check Availability" class="oe_highlight"
+                            attrs="{'invisible':[('is_mo_confirmed','=',True)]}" type="object"/>
+                    <button name="confirm_mo" string="Confirm Mo" class="oe_highlight"
+                            attrs="{'invisible':['|',('state','not in',['sale','done']),('is_mo_confirmed','=',True)]}"
+                            type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_view_invoice']" position="after">
+                    <button name="open_manufacturing_orders" string="Manufacturing Orders" icon="fa-list"
+                            class="oe_highlight" attrs="{'invisible':[('is_mo_confirmed','=',False)]}" type="object"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+                    <field name="available_qty" force_save="1" readonly="1"/>
+                    <field name="mrp_qty" optional="show"/>
+                    <field name="lube_mo" invisible="1"/>
+                    <field name="packaging_mo" invisible="1"/>
+                    <field name="prod_tmpl_id" invisible="1"/>
+                    <field name="lub_bom_id"
+                           context="{'default_product_tmpl_id':prod_tmpl_id,'default_bom_type':'lube_raw'}"
+                           invisible="0" domain="[('bom_type','=','lube_raw')]"/>
+                    <field name="pack_bom_id"
+                           context="{'default_product_tmpl_id':prod_tmpl_id,'default_bom_type':'packaging'}"
+                           invisible="0" domain="[('bom_type','=','packaging')]"/>
+                        <button name="action_create_lube_mo" string="Raw BOM"
+                                class="btn-primary" type="object"
+                                options='{"warn": true}' style="background-color:red;"
+                                attrs="{'invisible':[('lube_mo','!=',False)]}"/>
+                        <button name="action_create_lube_mo" string="Raw BOM"
+                                class="btn-primary" type="object"
+                                options='{"warn": true}' style="background-color:green;"
+                                attrs="{'invisible':[('lube_mo','=',False)]}"/>
+
+
+                    <button name="action_create_packaging_mo" string="Packaging BOM"
+                            class="btn-primary" type="object"
+                            options='{"warn": true}' style="background-color:red;"
+                            invisible="1"/>
+                    <button name="action_create_packaging_mo" string="Packaging BOM"
+                            class="btn-primary" type="object"
+                            options='{"warn": true}' style="background-color:green;"
+                            invisible="1"/>
+                </xpath>
+                <!--                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">-->
+                <!--                    -->
+
+                <!--                </xpath>-->
+            </field>
+        </record>
+
+    </data>
+</odoo>

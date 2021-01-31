@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="report_saleorder_document_customed" model="ir.ui.view">
+            <field name="name">sale.report_saleorder_document_customed</field>
+            <field name="inherit_id" ref="sale.report_saleorder_document"/>
+            <field eval="10" name="priority"/>
+            <field name="type">qweb</field>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//p[@t-if='doc.fiscal_position_id and doc.fiscal_position_id.note']" position="after">
+                        <br/>
+                        <b>Additional Notes:</b> <span t-field="doc.additional_notes"/>
+                        <br/>
+                        <strong>
+                            <div style="background-color: lightblue;width:40%;">Our Bank Details:</div>
+                        </strong>
+                        <div style="text-align:left;">
+                            Beneficiary Name:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.baneficiary_name"/>
+                            <br/>
+                            Bank Name:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.bank_id.name"/>
+                            <br/>
+                            Branch:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.branch"/>
+                            <br/>
+                            Address:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.bank_id.street" />
+                            <br/>
+                            Account No:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-field="doc.account_bank_id.bank_acc_number"/>
+                            <br/>
+                            IBAN :&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-field="doc.account_bank_id.iban"/>
+                            <br/>
+                            SWIFT:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-field="doc.account_bank_id.swift"/>
+                            <br/>
+                        </div>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <template id="custom_report_saleorder_pro_forma_document">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header">
+                <div class="row">
+                    <img src="/armor_templates/static/src/img/armor_Logo.png"
+                         style="display: block;float:left: auto;width:200px;height:120px;" alt="Logo"/>
+                </div>
+            </div>
+            <div class="footer " style="float:right;">
+                <div class="row">
+                    <div style="font-size:10px;position:absolute;right:300px;">
+                        T:<span t-field="company.phone"/>,F:
+                        <span t-field="company.fax"/>
+                        <br/>
+                        <span t-field="company.email"/>,
+                        <span t-field="company.website"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang':zh_CN})"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <center>
+                        <h2 style="text-decoration: underline;">Proforma Invoice</h2>
+                    </center>
+
+                    <table width="100%" border="0">
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td>
+                                <b>Date :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.date_order"/>
+                            </td>
+                            <td>
+                                <b>&#160;Order Ref :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.name"/>
+                            </td>
+                        </tr>
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td>
+                                <b>Customer :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;border-top:1px solid white;border-bottom:1px solid white;">
+                                <t t-esc="doc.partner_id.name"/>
+                            </td>
+                            <td>
+                                <b>&#160;Address :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;border-top:1px solid white;border-bottom:1px solid white;">
+                                <t t-if="doc.partner_id.street">
+                                    <t t-esc="doc.partner_id.street"/>,
+                                </t>
+
+                                <t t-if="doc.partner_id.street2">
+                                    <t t-esc="doc.partner_id.street2"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.city">
+                                    <t t-esc="doc.partner_id.city"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.state_id.name">
+                                    <t t-esc="doc.partner_id.state_id.name"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.country_id.name">
+                                    <t t-esc="doc.partner_id.country_id.name"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.zip">
+                                    <t t-esc="doc.partner_id.zip"/>
+
+                                </t>
+
+                            </td>
+
+                        </tr>
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.partner_id.main_contact"/>
+                            </td>
+                            <td>
+                                <b>&#160;Customer Ref :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.client_order_ref"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table border-black" style="border:1px solid black;">
+                        <thead style="background-color: lightblue;">
+                            <tr class="border-black" style="border-bottom:1px solid black;">
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;width:3%;">S.No</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Brand</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Description</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">SAE</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">API</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Unit</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Unit Price</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Quantity</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-set="seq" t-value="1"/>
+                            <t t-foreach="doc.order_line" t-as="l">
+                                <tr class="border-black">
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <t t-esc="seq"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_id.brand_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_id.sae_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_id.api_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_uom"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-esc="l.price_unit"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_uom_qty"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
+                                    </td>
+                                </tr>
+                                <t t-set="seq" t-value="seq+1"/>
+                            </t>
+                            <!--<tr class="border-black">
+                               <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                               <td style="border-right:1px solid black;padding:0px 0px 0px 5px;" colspan="7">SHIPPING CHANGES TO SOKHNA PORT FOR 20 FEET CONTAINER</td>
+                               <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                   <span t-esc="doc.shipping_cost"/>
+                               </td>
+                           </tr>-->
+                            <tr class="border-black">
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;" colspan="7"></td>
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                    <span t-esc="'{:,.2f}'.format(doc.amount_total)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div style="page-break-inside: avoid;">
+                        <strong>
+                            <div style="background-color: lightblue;width:40%;">Terms &amp; Condition:</div>
+                        </strong>
+
+                        Quotation Validity:
+                        <span t-field="doc.validity_date"/>
+                        <br/>
+                        Payment Terms:
+                        <span t-field="doc.payment_term_id"/>
+                        <br/>
+                        Delivery:
+                        <span t-field="doc.delivery"/>
+                        <br/>
+                        Prices:
+                        <span t-field="doc.prices"/>
+                        <br/>
+                        <b>Additional Notes:</b> <span t-field="doc.additional_notes"/>
+                        <br/>
+                        <strong>
+                            <div style="background-color: lightblue;width:40%;">Our Bank Details:</div>
+                        </strong>
+                        <div style="text-align:left;">
+                            Beneficiary Name:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.baneficiary_name"/>
+                            <br/>
+                            Bank Name:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.bank_id.name"/>
+                            <br/>
+                            Branch:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.branch"/>
+                            <br/>
+                            Address:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span t-field="doc.account_bank_id.bank_id.street"/>
+                            <br/>
+                            Account No:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-field="doc.account_bank_id.bank_acc_number"/>
+                            <br/>
+                            IBAN :&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-field="doc.account_bank_id.iban"/>
+                            <br/>
+                            SWIFT:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span t-field="doc.account_bank_id.swift"/>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Routing Code:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;703 820 101<br/>
+                -->
+            </t>
+
+        </template>
+
+
+        <template id="custom_report_saleorder_pro_forma" inherit_id="sale.report_saleorder_pro_forma">
+            <xpath expr="//t[@t-call='web.html_container']" position="replace">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-call="armor_templates.custom_report_saleorder_pro_forma_document"
+                           t-lang="doc.partner_id.lang"/>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+        <template id="custom_report_saleorder_qota_tem_document">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header">
+                <div class="row">
+                    <img src="/armor_templates/static/src/img/armor_Logo.png"
+                         style="display: block;float:left: auto;width:200px;height:120px;" alt="Logo"/>
+                </div>
+            </div>
+            <div class="footer " style="float:right;">
+                <div class="row">
+                    <div style="font-size:10px;position:absolute;right:300px;">
+                        T:<span t-field="company.phone"/>,F:
+                        <span t-field="company.fax"/>
+                        <br/>
+                        <span t-field="company.email"/>,
+                        <span t-field="company.website"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang':zh_CN})"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <center>
+                        <h2 style="text-decoration: underline;">Quotation</h2>
+                    </center>
+
+                    <table width="100%" border="0">
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td>
+                                <b>Date :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.date_order"/>
+                            </td>
+                            <td>
+                                <b>&#160;Order Ref :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.name"/>
+                            </td>
+                        </tr>
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td>
+                                <b>Customer :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;border-top:1px solid white;border-bottom:1px solid white;">
+                                <t t-esc="doc.partner_id.name"/>
+                            </td>
+                            <td>
+                                <b>&#160;Address :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;border-top:1px solid white;border-bottom:1px solid white;">
+                                <t t-if="doc.partner_id.street">
+                                    <t t-esc="doc.partner_id.street"/>,
+                                </t>
+
+                                <t t-if="doc.partner_id.street2">
+                                    <t t-esc="doc.partner_id.street2"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.city">
+                                    <t t-esc="doc.partner_id.city"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.state_id.name">
+                                    <t t-esc="doc.partner_id.state_id.name"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.country_id.name">
+                                    <t t-esc="doc.partner_id.country_id.name"/>
+                                    ,
+                                </t>
+
+                                <t t-if="doc.partner_id.zip">
+                                    <t t-esc="doc.partner_id.zip"/>
+
+                                </t>
+
+                            </td>
+
+                        </tr>
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.partner_id.main_contact"/>
+                            </td>
+                            <td>
+                                <b>&#160;Customer Ref :</b>
+                            </td>
+                            <td style="background-color: lightblue;height:30%;">
+                                <t t-esc="doc.client_order_ref"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table border-black" style="border:1px solid black;">
+                        <thead style="background-color: lightblue;">
+                            <tr class="border-black" style="border-bottom:1px solid black;">
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;width:3%;">S.No</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Brand</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Description</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">SAE</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">API</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Unit</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Unit Price</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Quantity</th>
+                                <th style="border-right:1px solid black;padding:0px 0px 0px 5px;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-set="seq" t-value="1"/>
+                            <t t-foreach="doc.order_line" t-as="l">
+                                <tr class="border-black">
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <t t-esc="seq"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_id.brand_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_id.sae_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_id.api_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_uom"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-esc="l.price_unit"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-field="l.product_uom_qty"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                        <span t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
+                                    </td>
+                                </tr>
+                                <t t-set="seq" t-value="seq+1"/>
+                            </t>
+                            <!--<tr class="border-black">
+                               <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                               <td style="border-right:1px solid black;padding:0px 0px 0px 5px;" colspan="7">SHIPPING CHANGES TO SOKHNA PORT FOR 20 FEET CONTAINER</td>
+                               <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                   <span t-esc="doc.shipping_cost"/>
+                               </td>
+                           </tr>-->
+                            <tr class="border-black">
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;"></td>
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;" colspan="7"></td>
+                                <td style="border-right:1px solid black;padding:0px 0px 0px 5px;">
+                                    <span t-esc="'{:,.2f}'.format(doc.amount_total)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div style="page-break-inside: avoid;">
+                        <strong>
+                            <div style="background-color: lightblue;width:40%;">Terms &amp; Condition:</div>
+                        </strong>
+
+                        Quotation Validity:
+                        <span t-field="doc.validity_date"/>
+                        <br/>
+                        Payment Terms:
+                        <span t-field="doc.payment_term_id"/>
+                        <br/>
+                        Delivery:
+                        <span t-field="doc.delivery"/>
+                        <br/>
+                        Prices:
+                        <span t-field="doc.prices"/>
+                        <br/>
+                        <strong>
+                            <div style="background-color: lightblue;width:40%;">Our Bank Details:</div>
+                        </strong>
+                        <div style="text-align:left;">
+                            Beneficiary Name:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Armor
+                            Lubricants
+                            <br/>
+                            Bank Name:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Sharjah
+                            Islamic Bank
+                            <br/>
+                            Branch:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Main
+                            Branch
+                            <br/>
+                            Address:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Main
+                            Branch, Mamzar, Sharjah, UAE.
+                            <br/>
+                            Account No:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0030-349270-001
+                            <br/>
+                            IBAN :&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;AE340410000030349270001
+                            <br/>
+                            SWIFT:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;NBSHAEAS
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Routing Code:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;703 820 101<br/>
+                -->
+            </t>
+
+        </template>
+        <template id="custom_report_saleorder_qota_tem">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="armor_templates.custom_report_saleorder_qota_tem_document"
+                       t-lang="doc.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- quota duplicated-->
+
+
+        <template id="custom_report_saleorder_qota_tem_duplicated">
+            <t t-call="web.html_container">
+                <t t-set="is_pro_forma" t-value="True"/>
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="sale.report_saleorder_document" t-lang="doc.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- job order  -->
+        <template id="report_joborder_document">
+            <div class="header">
+                    <div class="row">
+                        <img src="/armor_templates/static/src/img/armor_Logo.png"
+                             style="display: block;right:auto;width:200px;height:120px;
+position: absolute;
+    top: 0px;
+    right: 0px;"
+                             alt="Logo"/>
+                    </div>
+                </div>
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})"/>
+
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row" id="informations">
+                        <div style="width:20%">
+                            <strong>Date:</strong>
+                            <span t-esc="datetime.datetime.strptime(str(doc.date_order), '%Y-%m-%d %H:%M:%S').strftime('%d-%m-%Y')"/>
+                        </div>
+                        <div style="margin-left:110px;width:30%">
+                            <strong>Date of Invoice:</strong>
+                            <span t-esc="datetime.datetime.strptime(str(doc.confirmation_date), '%Y-%m-%d %H:%M:%S').strftime('%d-%m-%Y')"/>
+                        </div>
+                        <div style="margin-left:80px;width:20%"  t-if="doc.type_of_oil">
+                            <strong>Type Of Oil:</strong>
+                            <span t-field="doc.type_of_oil"/>
+                        </div>
+                    </div>
+                    <div class="row" id="informations">
+                        <div style="width:20%">
+                            <strong>SO#:</strong>
+                            <span t-field="doc.name"/>
+                        </div>
+                        <div style="margin-left:110px;width:30%">
+                            <strong>Export to:</strong>
+                            <t t-if="doc.partner_id.country_id">
+                                <span  t-field="doc.partner_id.country_id.name"/>
+                            </t>
+                        </div>
+                        <div style="margin-left:80px;width:20%">
+                            <strong>Ref:</strong>
+                            <span t-field="doc.ref"/>
+                        </div>
+                    </div>
+                    <div class="row" id="informations">
+                        <div t-if="doc.user_id.name" style="width:26%;">
+                            <strong>Salesperson:</strong>
+                            <span  t-field="doc.user_id"/>
+                        </div>
+                        <div style="margin-left:55px;width:30%;margin-right:40px;" t-if="doc.partner_id" >
+                            <strong>CustomerCode:</strong>
+                            <span t-field="doc.customer_sequence"/>
+                        </div>
+                    </div>
+<br/>
+                    <center>
+                        <h2 style="color:blue;">
+                            <span style="text-decoreport_joborderration: underline;">JOB ORDER</span>
+                        </h2>
+                    </center>
+
+                    <!-- Is there a discount on at least one line? -->
+                    <table class="table table-sm o_main_table border-black">
+                        <thead>
+                            <tr style="border:1px solid black;">
+                                <th style="border-right:1px solid black;">#</th>
+                                <th style="border-right:1px solid black;">Brand</th>
+                                <th style="border-right:1px solid black;">Description</th>
+                                <th style="border-right:1px solid black;">Mold</th>
+                                <th style="border-right:1px solid black;">Color</th>
+                                <th style="border-right:1px solid black;">Unit</th>
+                                <th style="border-right:1px solid black;">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+
+                            <t t-set="seq" t-value="1"/>
+
+                            <t t-foreach="doc.order_line" t-as="line">
+
+                                <tr style="border:1px solid black;">
+                                    <td style="border-right:1px solid black;">
+                                        <t t-esc="seq"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;">
+                                        <t t-foreach="line.product_id.attribute_value_ids" t-as="atribute">
+                                            <t t-if="atribute.attribute_id.name=='Brand'">
+                                                <span t-field="atribute.name"/>
+                                            </t>
+                                            <t t-if="atribute.attribute_id.name !='Brand'">
+                                                <span></span>
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td style="border-right:1px solid black;">
+                                        <span t-field="line.product_id.product_tmpl_id.name"/>
+                                    </td>
+                                    <td style="border-right:1px solid black;">
+                                        <t t-foreach="line.product_id.attribute_value_ids" t-as="atribute">
+                                            <t t-if="atribute.attribute_id.name=='Mold'">
+                                                <span t-field="atribute.name"/>
+                                            </t>
+                                            <t t-if="atribute.attribute_id.name !='Mold'">
+                                                <span></span>
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td style="border-right:1px solid black;">
+
+                                        <t t-if="line.product_color_id">
+                                            <span t-field="line.product_color_id.name"/>
+                                        </t>
+                                        <t t-if="not line.product_color_id">
+                                            <spna></spna>
+                                        </t>
+                                    </td>
+                                    <td style="border-right:1px solid black;">
+                                        <t t-foreach="line.product_id.attribute_value_ids" t-as="atribute">
+                                            <t t-if="atribute.attribute_id.name=='Size'">
+                                                <span t-field="atribute.name"/>
+                                            </t>
+                                            <t t-if="atribute.attribute_id.name !='Size'">
+                                                <span></span>
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td style="border-right:1px solid black;">
+                                        <span t-field="line.product_uom_qty"/>
+                                    </td>
+                                    <t t-set="seq" t-value="seq+1"/>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <p t-field="doc.joborder_note"/>
+
+                    <table width="100%" border="0">
+                        <tr style="border-top:none;border-bottom:none;">
+                            <td align="left" style="width:35%;font-size:15px;padding-left:15px;">Prepared By:
+                            </td>
+                            <td align="center" style="font-size:15px;">Checked By:
+                            </td>
+                            <td align="right" style="width:35%;font-size:15px;">Approved By:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="width:35%;">
+                                <hr style="width:35%;"/>
+                            </td>
+
+                            <td align="center" style="width:35%;">
+                                <hr style="width:35%;"/>
+                            </td>
+                            <td align="right" style="width:35%;">
+                                <hr style="width:35%;"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_joborder">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="armor_templates.report_joborder_document" t-lang="doc.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

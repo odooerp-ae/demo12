@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend"  inherit_id="web.assets_backend"  name="armor_templates assets">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript"
+                        src="/armor_templates/static/src/js/section_and_note_fields_backend.js"></script>
+               <link rel="stylesheet" type="text/scss" href="/armor_templates/static/src/scss/section_and_note_backend.scss"/>
+            </xpath>
+        </template>
+        <!-- <template id="test_armor" name="armor_templates tests" inherit_id="web.qunit_suite">
+      <xpath expr="//script[contains(@src, '/web/static/tests/views/kanban_tests.js')]" position="after">
+          <script type="text/javascript" src="/armor_templates/static/tests/section_and_note_tests.js"></script>
+      </xpath>
+    </template>-->
+    </data>
+
+</odoo>

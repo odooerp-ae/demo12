@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <template id="sale_purchase_template_report">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <!-- <t t-call="web.external_layout"> -->
+                    <div class="page">
+                        <h4>
+                            <span t-esc="date_from"/>
+                            -
+                            <span t-esc="date_to"/>
+                        </h4>
+                        <h4>Report Type : <span t-esc="state"/> </h4>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="background:#2980b9;color:white">Number</th>
+                                    <th style="background:#2980b9;color:white">Date</th>
+                                    <th style="background:#2980b9;color:white">Partner</th>
+                                    <th style="background:#2980b9;color:white">Subtotal</th>
+                                    <th style="background:#2980b9;color:white">Tax</th>
+                                    <th style="background:#2980b9;color:white">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="i" t-value="1"/>
+                                <tr t-foreach="docs" t-as="o">
+                                    <t t-set="i" t-value="i+1"/>
+                                    <t t-if="i%2 == 0">
+                                        <td style="background:#eee;padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['name']"/>
+                                        </td>
+                                        <td style="background:#eee;padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['date']"/>
+                                        </td>
+                                        <td style="background:#eee;padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['partner']"/>
+                                        </td>
+                                        <td style="background:#eee;padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['subtotal']"/>
+                                        </td>
+                                        <td style="background:#eee;padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['tax']"/>
+                                        </td>
+                                        <td style="background:#eee;padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['state']"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td style="padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['name']"/>
+                                        </td>
+                                        <td style="padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['date']"/>
+                                        </td>
+                                        <td style="padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['partner']"/>
+                                        </td>
+                                        <td style="padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['subtotal']"/>
+                                        </td>
+                                        <td style="padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['tax']"/>
+                                        </td>
+                                        <td style="padding-top:2px;padding-bottom:2px">
+                                            <span t-esc="o['state']"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+        <!-- Sale && Purchase QWeb Reports -->
+        <report
+                id="sale_purchase_action_report"
+                model="sales.purchase.report.wizard"
+                report_type="qweb-pdf"
+                string="Sales Purchase Reports"
+                menu="False"
+                name="ae_partner_report.sale_purchase_template_report"
+                file="ae_partner_report.sale_purchase_template_report"
+        />
+
+    </data>
+</odoo>

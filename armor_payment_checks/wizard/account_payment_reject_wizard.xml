@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="payment_check_reject_popup" model="ir.ui.view">
+            <field name="name">account.payment.reject.wizard</field>
+            <field name="model">account.payment.reject.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Payment">
+                   <sheet>
+                       <group>
+                           <field name="journal_id" invisible="1" />
+                           <field name="credit_journal_id" invisible="1" />
+                           <field name="due_date" required="1"/>
+                       </group>
+                   </sheet>
+                  <footer>
+                        <button name="reject" type="object" string="Reject" class="btn btn-sm btn-primary"/>
+                        <button string="Discard" special="cancel" class="btn btn-sm btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="account_payment_from_reject_action" model="ir.actions.act_window">
+            <field name="name">account.payment.reject.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.payment.deposit.wizard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+              </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+              </p>
+            </field>
+        </record>
+
+        <act_window
+                id="action_account_payment_from_deposit"
+                name="Reject"
+                res_model="account.payment.reject.wizard"
+                src_model="account.payment"
+                view_mode="form"
+                multi="True"
+                target="new"
+                key2="client_action_multi"
+            />
+
+    </data>
+</odoo>

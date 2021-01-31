@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="check_mo_view_form" model="ir.ui.view">
+            <field name="name">CHeck.form</field>
+            <field name="model">check.mo</field>
+            <field name="arch" type="xml">
+                <form >
+                    <group class="oe_title">
+                        <field name="name" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_continue" string="Continue" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!--TODO the most powerfull window action-->
+        <record id="check_mo_window_action" model="ir.actions.act_window">
+            <field name="name">Check Mo</field>
+            <field name="res_model">check.mo</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+
+
+</data>
+
+</odoo>

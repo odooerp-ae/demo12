@@ -1,0 +1,302 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="variants_tree_view_inherits">
+            <field name="name">product.attribute.value.form.inherit</field>
+            <field name="model">product.attribute.value</field>
+            <field name="inherit_id" ref="product.variants_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_brand"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="crm_case_form_view_oppor_custom">
+            <field name="name">crm.lead.form.opportunity</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <group>
+                         <field name="currency_id"/>
+                         <field name="converted_amount"/>
+                        <field name="planned_revenue_kanban" invisible="1"/>
+                    </group>
+
+                </field>
+                <field name="country_id" position="replace">
+                </field>
+                <xpath expr="//field[@name='partner_address_email']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                     <attribute name="required">0</attribute>
+                </xpath>
+
+                <field name="team_id" position="after">
+                    <field name="brand_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <!--  <field name="country_group_id"/>
+                      <field name="country_id" domain="[('country_group_ids','in',  country_group_id)]" />
+                      -->
+                    <field name="user_type"/>
+                    <field name="container"/>
+                    <label for="margin_value"/>
+                    <div class="o_row">
+                        <field name="margin_value"/>
+                        <span>AED</span>
+                    </div>
+                    <label for="margin"/>
+                    <div class="o_row">
+                        <field name="margin" widget="percent"/> %
+                    </div>
+                    <label for="margin_aed_container"/>
+                    <div class="o_row">
+                        <field name="margin_aed_container"/>
+                        <span>AED</span>
+                    </div>
+                </field>
+                <xpath expr="//page[@name='lead']" position="replace">
+                    <page name="lead" string="Followup">
+                        <group>
+                            <group string="Initial Contact Information">
+                                <field name="partner_name"/>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="country_group_id" placeholder="Region"/>
+                                    <field name="country_id" placeholder="Country"
+                                           domain="[('country_group_ids','in',  country_group_id)]"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State"
+                                           options='{"no_open": True}' required="1"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+
+                                </div>
+                                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                            </group>
+
+                            <group class="mt48">
+                                <label for="contact_name"/>
+                                <div class="o_row">
+                                    <field name="contact_name"/>
+                                    <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
+                                </div>
+                                <field name="function"/>
+                                <field name="mobile"/>
+                            </group>
+                            <group string="Marketing">
+                                <field name="campaign_id"/>
+                                <field name="medium_id"/>
+                                <field name="source_id"/>
+                            </group>
+                            <group string="Misc" name="Misc">
+                                <field name="day_open" groups="base.group_no_one"/>
+                                <field name="day_close" groups="base.group_no_one"/>
+                                <field name="referred"/>
+                                <field name="type" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <!--<xpath expr="//field[@name='next_activity_id']" position="attributes">-->
+                <!--<attribute name="required">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='date_action']" position="attributes">-->
+                <!--<attribute name="required">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='title_action']" position="attributes">-->
+                <!--<attribute name="required">1</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//page[@name='lead']//field[@name='mobile']" position="replace">
+
+                </xpath>
+                <xpath expr="//page[@name='lead']//group//group[1]" position="replace"></xpath>
+                <xpath expr="//page[@name='lead']//group//group[1]" position="replace"></xpath>
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="mobile" required="1"/>
+                </xpath>
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='brand_ids']" position="before">
+                    <field name="partner_name"/>
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="country_group_id" placeholder="Region"/>
+                        <field name="country_id" placeholder="Country"
+                               domain="[('country_group_ids','in',  country_group_id)]"/>
+                        <field name="state_id" class="o_address_state" placeholder="State"
+                               options='{"no_open": True}' required="1"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+
+                    </div>
+                    <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                </xpath>
+
+                <xpath expr="//field[@name='email_from']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='mobile']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="email_from" widget="email"/>
+                    <field name="mobile"/>
+                    <field name="phone" widget="phone"/>
+                    <field name="facebook"/>
+                    <field name="twitter"/>
+                    <field name="linkedin"/>
+                    <field name="instgram"/>
+                </xpath>
+                <xpath expr="//field[@name='brand_ids']" position="after">
+                    <field name="user_id"/>
+                    <field name="team_id"/>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="before">
+                    <label for="contact_name"/>
+                    <div class="o_row">
+                        <field name="contact_name"/>
+                        <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
+                    </div>
+                    <field name="contact_mobile"/>
+                    <field name="function"/>
+
+                </xpath>
+               <xpath expr="//field[@name='partner_name']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                     <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                     <attribute name="required">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='phone']" position="attributes">
+                     <attribute name="required">1</attribute>
+                </xpath>
+                <field name="state_id" position="attributes">
+                    <attribute name="domain">[('country_id','=', country_id)]</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_kanban_view_leads_customed">
+            <field name="name">crm.lead.kanban.opportunity.cutomeeed</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//kanban" position="inside">-->
+                <!--<field name="brand_ids" />-->
+                <!--</xpath>-->
+                <xpath expr="//field[@name='planned_revenue']" position="after">
+                    <field name="planned_revenue_kanban"/>
+                </xpath>
+                <xpath expr="//progressbar" position="replace">>
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'
+                                 sum_field="planned_revenue_kanban"   help="This bar allows to filter the opportunities based on scheduled activities."/>
+
+                </xpath>
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="quick_create">false</attribute>
+               </xpath>
+                <xpath expr="//div[@class='o_kanban_record_bottom']" position="before">
+                    <div>
+                        <strong>Container:</strong>
+                        <field name="container"/>
+                    </div>
+                    <div>
+                        <strong>Brand:</strong>
+                        <!--<field name="brand_ids" widget="many2many_tags"/>-->
+                        <field name="brand_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    </div>
+                    <div>
+                        <strong>Country:</strong>
+                        <field name="country_id"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_form_view_leads_customed">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email_from']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='mobile']" position="replace">
+                </xpath>
+                <!--  <xpath expr="//field[@name='country_id']" position="before">
+                      <field name="country_group_id" placeholder="Region"/>
+                  </xpath>-->
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="email_from" widget="email"/>
+                    <field name="mobile"/>
+                    <field name="phone" widget="phone"/>
+                    <field name="facebook"/>
+                    <field name="twitter"/>
+                    <field name="linkedin"/>
+                    <field name="instgram"/>
+                </xpath>
+                <field name="user_id" position="before">
+                    <field name="brand_ids" widget="many2many_tags"/>
+                </field>
+                <field name="street" position="replace">
+                </field>
+                <field name="street2" position="replace">
+                </field>
+                <field name="city" position="replace">
+                </field>
+                <field name="state_id" position="replace">
+                </field>
+                <field name="zip" position="replace">
+                </field>
+                <field name="country_id" position="replace">
+                    <field name="country_group_id" placeholder="Region"/>
+                    <field name="country_id" placeholder="Country" class="o_address_country"
+                           options='{"no_open": True, "no_create": True}'/>
+                  <field name="state_id" class="o_address_state" required="1" placeholder="State" options='{"no_open": True}'/>
+
+                    <field name="city" placeholder="City" class="o_address_city"/>
+                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                </field>
+                <field name="country_id" position="attributes">
+                    <attribute name="domain">[('country_group_ids','in', country_group_id)]</attribute>
+                </field>
+                <field name="state_id" position="attributes">
+                    <attribute name="domain">[('country_id','=', country_id)]</attribute>
+                </field>
+                <!-- <xpath expr="//field[@name='partner_name']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                     <attribute name="required">0</attribute>
+                </xpath>-->
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                     <attribute name="required">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='phone']" position="attributes">
+                     <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+        <record id="base.action_country_group" model="ir.actions.act_window">
+            <field name="name">Region</field>
+        </record>
+
+        <!--<delete model="ir.ui.menu" id="base.menu_country_group"/>-->
+        <!--<menuitem action="base.action_country_group" id="base.menu_country_group" name="Region" parent="sales_team.menu_localisation" sequence="3" groups="base.group_no_one"/>-->
+
+
+    </data>
+</odoo>

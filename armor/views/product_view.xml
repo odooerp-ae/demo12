@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="product_product_form" model="ir.ui.view">
+        <field name="name">Product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lst_price']" position="after">
+                <field name="bom_cost"/>
+            </xpath>
+            <xpath expr="//div[@name='options']" position="inside">
+                <div>
+                <field name="is_product_packaging"/>
+                <label for="is_product_packaging"/>
+            </div>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">Product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='list_price']" position="before">
+                <field name="bom_cost"/>
+            </xpath>
+            <xpath expr="//div[@name='options']" position="inside">
+                <div>
+                <field name="is_product_packaging"/>
+                <label for="is_product_packaging"/>
+            </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

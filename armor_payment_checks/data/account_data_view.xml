@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Payment sequences direct accounts -->
+        <record id="sequence_payment_direct_account_in" model="ir.sequence">
+            <field name="name">Payments Direct Account In sequence</field>
+            <field name="code">account.payment.direct.account.in</field>
+            <field name="prefix">DirAcc.IN/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+        <record id="sequence_payment_direct_account_refund" model="ir.sequence">
+            <field name="name">Payments Direct Account refunds sequence</field>
+            <field name="code">account.payment.direct.account.refund</field>
+            <field name="prefix">DirAcc.OUT/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+        <!--<record id="sequence_payment_direct_account_transfer" model="ir.sequence">
+            <field name="name">Payments Direct Account transfer sequence</field>
+            <field name="code">account.payment.direct.account.transfer</field>
+            <field name="prefix">DirAcc.TRANS/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>-->
+
+    </data>
+</odoo>

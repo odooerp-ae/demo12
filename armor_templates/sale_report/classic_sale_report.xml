@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="custom_report_sale_order"
+            string="PRO-FORMA Invoice Template"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            menu="False"
+            file="armor_templates.custom_report_saleorder_pro_forma"
+            name="armor_templates.custom_report_saleorder_pro_forma"
+        />
+        <report
+            id="custom_report_sale_order_quota"
+            string="Quotation Template"
+            model="sale.order"
+            report_type="qweb-pdf"
+            menu="False"
+            file="armor_templates.custom_report_saleorder_qota_tem"
+            name="armor_templates.custom_report_saleorder_qota_tem"
+        />
+
+         <report
+            id="custom_report_sale_order_quota_duplicated"
+            string="Proforma Invoice Template"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="armor_templates.custom_report_saleorder_qota_tem_duplicated"
+            name="armor_templates.custom_report_saleorder_qota_tem_duplicated"
+        />
+
+        <report
+            id="action_report_joborder"
+            string="Job Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="armor_templates.report_joborder"
+            name="armor_templates.report_joborder"
+            menu="False"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--  Invoices && Bills Form View Wizard      -->
+        <record id="invoices_bills_report_wizard_view" model="ir.ui.view">
+            <field name="name">Invoices Bills Report Wizard</field>
+            <field name="model">invoices.bills.report.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="date_from" string="Date From" required="1"/>
+                            <field name="invoices_bills_check" required="1" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="date_to" string="Date To" required="1"/>
+                            <field name="state" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="partner_ids" widget="many2many_tags" string="Partners"/>
+                    </group>
+                    <footer>
+                        <button string='Print' name="get_report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--  Invoices && Bills Action View       -->
+        <record id="action_invoices_bills_report_wizard" model="ir.actions.act_window">
+            <field name="name">Invoices &amp; Bills Report</field>
+            <field name="res_model">invoices.bills.report.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="invoices_bills_report_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <!--  Invoices && Bills Sub menu     -->
+        <menuitem id="invoices_bills_reports_id" name="Invoices &amp; Bills Report" action="action_invoices_bills_report_wizard"
+                  parent="sales_purchase_reports_parent_id" sequence="11"/>
+
+    </data>
+</odoo>

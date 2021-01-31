@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_product_api,product.api,armor_templates.model_product_api,,1,1,1,1
+access_product_sae,product.sae,armor_templates.model_product_sae,,1,1,1,1
+access_type_oil,type.oil,armor_templates.model_type_oil,,1,1,1,1

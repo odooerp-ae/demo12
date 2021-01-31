@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_multi_payment_account,multi_payment_account,armor_payment_checks.model_multi_payment_account,,1,1,1,1

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_company_custoom_inherit_form_view" model="ir.ui.view">
+            <field name="name">res_company_inherit.inherit_form_view</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="phone" position="after">
+                    <field name="fax"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_partner_form_inherit_form_view" model="ir.ui.view">
+            <field name="name">res.partner.inherited_form_view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="lang" position="after">
+                    <field name="main_contact"/>
+                </field>
+                <xpath expr="//field[@name='child_ids']//form//group//group[2]//field[@name='email']"
+                       position="attributes">
+                    <attribute name="required">0</attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='city']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="state_id" class="o_address_state"
+                           required="1" placeholder="State" options='{"no_open": True}'
+                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                           context="{'country_id': country_id, 'zip': zip}"/>
+                    <field name="city" placeholder="City" class="o_address_city"
+                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="purchase_order_form_inheriteed" model="ir.ui.view">
+            <field name="name">purchase.order.inheriteed</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="date_order" position="after">
+                    <field name="other_ref"/>
+                    <field name="despatch"/>
+                    <field name="destination"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_picking_form_inheriteed" model="ir.ui.view">
+            <field name="name">stock.picking.inheriteed</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="scheduled_date" position="after">
+                    <field name="driver_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_invoice_form_form_inheriteed" model="ir.ui.view">
+            <field name="name">account.invoice.inheriteed</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="after">
+                    <field name="account_bank_id"/>
+                </field>
+            </field>
+        </record>
+         <record id="view_invoice_form_supp_inheriteed" model="ir.ui.view">
+            <field name="name">account.invoice.inheriteed</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="after">
+                    <field name="account_bank_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="product_normal_changees_form_view" model="ir.ui.view">
+            <field name="name">product.normal.changes</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="after">
+                    <field name="sae_id"/>
+                    <field name="api_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_order_form_inheriteed_fields" model="ir.ui.view">
+            <field name="name">sale.order.fields.inherited_form_view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="account_bank_id"/>
+                    <field name="delivery"/>
+                    <field name="prices"/>
+                    <field name="type_of_oil"/>
+                    <field name="ref"/>
+                </field>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Job Order" name="order_notes">
+                         <field name="joborder_note"/>
+                    </page>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="print_job_order" string="Print Job Order" type="object" states="done,sale"
+                            class="o_sale_print"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_api" model="ir.actions.act_window">
+            <field name="name">API</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.api</field>
+            <field name="view_type">form</field>
+            <field name="help">Display and manage the list of all APIs.</field>
+        </record>
+        <record id="action_sae" model="ir.actions.act_window">
+            <field name="name">SAE</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.sae</field>
+            <field name="view_type">form</field>
+            <field name="help">Display and manage the list of all SAE.</field>
+        </record>
+
+        <record id="view_vehicle_stock_picking_inherited_form" model="ir.ui.view">
+            <field name="name">view.vehicle.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scheduled_date']" position="after">
+                    <field name="vehicle_num"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_id']" position="replace">
+                    <field name="product_id" required="0"
+                           attrs="{'readonly': ['|', '&amp;', ('state', '!=', 'draft'), ('additional', '=', False), ('has_move_lines', '=', True)]}"/>
+
+                </xpath>
+               <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='name']" position="replace">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" widget="section_and_note_text"  string="Container"
+                            attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
+                    <field name="display_type" invisible="1"/>
+                </xpath>
+                <xpath expr="//page/field[@name='move_ids_without_package']" position="attributes">
+                    <attribute name="widget">section_and_note_one2many</attribute>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']//tree" expression="inside">
+                    <control>
+                        <create string="Add a product"/>
+                        <create string="Add a Container" context="{'default_display_type': 'line_section'}"/>
+                    </control>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+
+        <menuitem id="menu_sae_action"
+                  action="action_sae"
+                  parent="stock.menu_product_in_config_stock"
+                  name="SAE"
+                  sequence="99"/>
+
+        <menuitem id="menu_api_action"
+                  action="action_api"
+                  parent="stock.menu_product_in_config_stock"
+                  name="API"
+                  sequence="99"/>
+
+
+    </data>
+</odoo>

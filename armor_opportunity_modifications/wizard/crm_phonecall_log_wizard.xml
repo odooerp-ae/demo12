@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="wizard_change_log_form_view_custom">
+                <field name="name">voip.phonecall.log.wizard</field>
+                <field name="model">voip.phonecall.log.wizard</field>
+                <field name="inherit_id" ref="crm_voip.wizard_change_log_form_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//group/group[3]" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                </field>
+    </record>
+    </data>
+</odoo>
