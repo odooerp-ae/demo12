@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">['&amp;',('customer','=',True),'|',('user_id','=',uid),('allowed_user_ids','in',uid)]</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale.action_orders_to_invoice" model="ir.actions.act_window">
+            <field name="name">Orders to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="domain">['&amp;',('invoice_status','=','to invoice'),'|',('partner_id.user_id','=',uid),('partner_id.allowed_user_ids','in',uid)]</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot,kanban,activity</field>
+            <field name="context">{'create': False}</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+        <record id="sale.action_orders_upselling" model="ir.actions.act_window">
+            <field name="name">Orders to Upsell</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="domain">['&amp;',('invoice_status','=','upselling'),'|',('partner_id.user_id','=',uid),('partner_id.allowed_user_ids','in',uid)]</field>
+            <field name="view_mode">tree,form,calendar,graph,pivot,kanban,activity</field>
+            <field name="context">{'create': False}</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">['|',('user_id','=',uid),('allowed_user_ids','in',uid)]</field>
+            <field name="context">{"search_default_customer":1}</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new customer in your address book
+                </p>
+                <p>
+                    Odoo helps you easily track all activities related to a customer.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_open_so_orders" model="ir.actions.act_window">
+            <field name="name">Orders</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['&amp;',('state', 'not in', ('draft', 'sent', 'cancel')),'|',('partner_id.user_id','=',uid),('partner_id.allowed_user_ids','in',uid)]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+        </record>
+
+<!--        <record id="action_open_so_orders" model="ir.actions.server">-->
+<!--            <field name="name">Sale Order</field>-->
+<!--            <field name="model_id" ref="sale.model_sale_order"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">action = model.action_open_orders()</field>-->
+<!--        </record>-->
+
+        <menuitem id="sale.menu_sale_order"
+                  name="Orders"
+                  action="action_open_so_orders"
+                  parent="sale.sale_order_menu"
+                  sequence="2" groups="sales_team.group_sale_salesman"/>
+        <record id="action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="domain">['|',('partner_id.user_id','=',uid),('partner_id.allowed_user_ids','in',uid)]</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'search_default_my_quotation': 1}</field>
+
+        </record>
+
+        <menuitem id="sale.menu_sale_quotations"
+                  action="action_quotations_with_onboarding"
+                  parent="sale.sale_order_menu"
+                  sequence="1" groups="sales_team.group_sale_salesman"/>
+        <record id="action_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="domain">['|',('partner_id.user_id','=',uid),('partner_id.allowed_user_ids','in',uid)]</field>
+
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'search_default_my_quotation': 1}</field>
+        </record>
+        <menuitem
+                id="sale_crm.sale_order_menu_quotations_crm"
+                name="My Quotations"
+                action="action_quotations"
+                parent="crm.crm_menu_sales"
+                sequence="2"/>
+        <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
+            <field name="name">Pipeline</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
+            <field name="domain">[('type','=','opportunity'),('partner_id.user_id','=',uid)]</field>
+            <field name="context">{
+                'default_type': 'opportunity',
+                'search_default_assigned_to_me': 1
+                }
+            </field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+    </data>
+</odoo>

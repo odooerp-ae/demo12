@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inheritxxs_view_res_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='function']" position="after">
+                    <field name="phone3"  widget="phone"/>
+                    <field name="phone2"  widget="phone"/>
+                </xpath>
+                <xpath expr="//field[@name='website']" position="before">
+
+                    <field name="email2"  widget="email" />
+                    <field name="email3"  widget="email" />
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

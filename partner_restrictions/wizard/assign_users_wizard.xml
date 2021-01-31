@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="lg_renew_view_form" model="ir.ui.view">
+            <field name="name">assign.user.wizard.form</field>
+            <field name="model">assign.user.wizard</field>
+            <field name="arch" type="xml">
+                <form >
+                    <header>
+                        <button name="action_apply" string="Assign" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="allowed_user_ids" widget="many2many_tags" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+
+                </form>
+            </field>
+        </record>
+        <record id="lg_renew_view_tree" model="ir.ui.view">
+            <field name="name">assign.user.wizard.tree</field>
+            <field name="model">assign.user.wizard</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="allowed_user_ids" widget="many2many_tags" />
+                </tree>
+            </field>
+        </record>
+        <!--TODO the most powerfull window action-->
+        <record id="assign_users_window_action" model="ir.actions.act_window">
+            <field name="name">Assign Users To access All customers</field>
+            <field name="res_model">assign.user.wizard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+        </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="assign_users_categ" name="Assign Users to access all customers" parent="sale.menu_sale_config" action="assign_users_window_action" sequence="7"/>
+
+    </data>
+
+</odoo>
